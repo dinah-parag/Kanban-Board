@@ -2,40 +2,45 @@ import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
 
 export const useKanbanStore = defineStore('kanban', () => {
-  // Estado Inicial: 3 Colunas
+  // Estado Inicial
   const columns = ref([
-    {
-      id: 'todo',
-      title: '📅 A Fazer',
+    { 
+      id: 'todo', 
+      title: '📅 A Fazer', 
       tasks: [
-        { id: 1, title: 'Alimentar gatos' },
-        { id: 2, title: 'Praticar línguas' }
-      ]
+        // --- ADICIONE TAREFAS DE EXEMPLO AQUI ---
+        { id: 101, title: 'Alimentar gato', priority: 'urgent' },
+        { id: 102, title: 'Paticar grego', priority: 'normal' }
+      ] 
     },
-    {
-      id: 'doing',
-      title: '💻 Fazendo',
-      tasks: []
+    { 
+      id: 'doing', 
+      title: '💻 Fazendo', 
+      tasks: [
+        // --- PODE ADICIONAR NA COLUNA "FAZENDO" TAMBÉM ---
+        { id: 201, title: 'Desenvolver layout responsivo', priority: 'low' }
+      ] 
     },
-    {
-      id: 'done',
-      title: '✅ Feito',
-      tasks: []
+    { 
+      id: 'done', 
+      title: '✅ Feito', 
+      tasks: [] // Esta coluna começa vazia
     }
   ])
 
-  // Ação: Adicionar Tarefa
+  // 1. Adicionar Tarefa
   const addTask = (columnId, taskTitle) => {
     const column = columns.value.find(c => c.id === columnId)
     if (column) {
       column.tasks.push({
-        id: Date.now(), // Gera ID único baseado no tempo
-        title: taskTitle
+        id: Date.now(),
+        title: taskTitle,
+        priority: 'normal' 
       })
     }
   }
 
-  // Ação: Deletar Tarefa
+  // 2. Deletar Tarefa
   const deleteTask = (columnId, taskId) => {
     const column = columns.value.find(c => c.id === columnId)
     if (column) {
@@ -43,8 +48,32 @@ export const useKanbanStore = defineStore('kanban', () => {
     }
   }
 
-  // Persistência: Salvar no LocalStorage sempre que algo mudar
-  // O 'deep: true' é vital para observar mudanças DENTRO dos arrays
+  // 3. Atualizar Texto (Editar)
+  const updateTask = (columnId, taskId, newTitle) => {
+    const column = columns.value.find(c => c.id === columnId)
+    const task = column.tasks.find(t => t.id === taskId)
+    if (task) {
+      task.title = newTitle
+    }
+  }
+
+  // 4. Mudar Prioridade (Ciclo: Baixa -> Normal -> Urgente)
+  const cyclePriority = (columnId, taskId) => {
+    const column = columns.value.find(c => c.id === columnId)
+    const task = column.tasks.find(t => t.id === taskId)
+    if (!task) return
+
+    const priorities = ['low', 'normal', 'urgent']
+    const currentIndex = priorities.indexOf(task.priority || 'normal')
+    const nextIndex = (currentIndex + 1) % priorities.length 
+    task.priority = priorities[nextIndex]
+  }
+
+  // 5. Limpar Quadro Inteiro
+  const clearBoard = () => {
+    columns.value.forEach(col => col.tasks = [])
+  }
+
   if (localStorage.getItem('kanban_state')) {
     columns.value = JSON.parse(localStorage.getItem('kanban_state'))
   }
@@ -53,5 +82,5 @@ export const useKanbanStore = defineStore('kanban', () => {
     localStorage.setItem('kanban_state', JSON.stringify(newVal))
   }, { deep: true })
 
-  return { columns, addTask, deleteTask }
+  return { columns, addTask, deleteTask, updateTask, cyclePriority, clearBoard }
 })
