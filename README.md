@@ -1,5 +1,7 @@
-# Vue 3 + Vite
+# Kanban Pro - Gerenciador de tarefas interativo
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+*Disponível online em*: https://kanban-board-mu-six.vercel.app/
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+*O que é*: Um quadro de organização visual estilo Trello. Permite criar, editar e excluir tarefas, além de movê-las entre colunas usando "arrastar e soltar" (Drag and Drop). Conta com sistema de etiquetas de prioridade coloridas, edição rápida de texto e salva todo o progresso automaticamente no navegador.
+
+*Conceitos Teóricos*: Gerenciamento de Estado Global (Pinia), Integração de Bibliotecas complexas (Vue Draggable), Reactividade Profunda (Deep Watchers para sincronização com LocalStorage), Lógica de CRUD em arrays aninhados e CSS Responsivo.
