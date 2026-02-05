@@ -8,7 +8,6 @@ export const useKanbanStore = defineStore('kanban', () => {
       id: 'todo', 
       title: '📅 A Fazer', 
       tasks: [
-        // --- ADICIONE TAREFAS DE EXEMPLO AQUI ---
         { id: 101, title: 'Alimentar gato', priority: 'urgent' },
         { id: 102, title: 'Paticar grego', priority: 'normal' }
       ] 
@@ -17,14 +16,13 @@ export const useKanbanStore = defineStore('kanban', () => {
       id: 'doing', 
       title: '💻 Fazendo', 
       tasks: [
-        // --- PODE ADICIONAR NA COLUNA "FAZENDO" TAMBÉM ---
         { id: 201, title: 'Desenvolver layout responsivo', priority: 'low' }
       ] 
     },
     { 
       id: 'done', 
       title: '✅ Feito', 
-      tasks: [] // Esta coluna começa vazia
+      tasks: [] 
     }
   ])
 
