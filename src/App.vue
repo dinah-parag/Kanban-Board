@@ -144,7 +144,7 @@ const confirmClear = () => {
 .draggable-area { min-height: 50px; }
 
 .task-card {
-  background: rgb(133, 115, 115);
+  background: rgb(255, 255, 255);
   padding: 10px;
   margin-bottom: 8px;
   border-radius: 4px;
